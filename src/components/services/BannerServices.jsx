@@ -67,9 +67,7 @@ export default function BannerServices() {
   return (
     <div className="my-10 max-w-screen-xl mx-auto">
       <div className="flex flex-col items-center justify-center">
-        <h2 className="text-3xl text-primary font-semibold">
-          Nuestros servicios
-        </h2>
+        <h2 className="text-3xl text-primary font-bold">Nuestros servicios</h2>
         <div className="bg-gray-50 mt-8 text-sm text-gray-500 font-semibold rounded-lg max-md:grid grid-cols-3">
           {categories.slice(0, 3).map((category) => (
             <button
@@ -141,7 +139,7 @@ export default function BannerServices() {
                 </p>
               </div>
               <button
-                className="bg-gradient-to-r from-secondary to-primary hover:scale-105 transition-all mt-6 rounded-xl py-2 text-white"
+                className="bg-gradient-to-r from-secondary to-primary hover:scale-105 transition-all duration-300 mt-6 rounded-xl py-2 text-white"
                 onClick={() => handleServiceClick(service)}
               >
                 Reservar ahora
@@ -152,7 +150,7 @@ export default function BannerServices() {
       </div>
       <div className="flex justify-center mt-8">
         <button
-          className="border border-secondary text-secondary py-2 px-4 rounded-lg hover:bg-purple-100 hover:text-black text-sm transition-all"
+          className="border border-secondary text-secondary py-2 px-4 rounded-lg hover:bg-purple-100 hover:text-black text-sm transition-all duration-300"
           onClick={() => console.log("Ver más servicios")}
         >
           Ver todos los servicios

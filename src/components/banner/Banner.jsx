@@ -34,7 +34,7 @@ export default function Banner() {
               />
             </div>
 
-            <button className="bg-gradient-to-r from-secondary to-primary p-3 rounded-xl text-white hover:scale-105 transition-all">
+            <button className="bg-gradient-to-r from-secondary to-primary p-3 rounded-xl text-white hover:scale-105 transition-all duration-300">
               Buscar
             </button>
           </div>
