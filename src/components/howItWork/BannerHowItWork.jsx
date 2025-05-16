@@ -30,7 +30,7 @@ export default function BannerHowItWork() {
           {steps.map((step, index) => (
             <div
               key={index}
-              className="flex flex-col items-center max-w-xl mx-auto"
+              className="flex flex-col items-center w-full md:w-1/3 max-md:px-4 mx-auto"
             >
               <div
                 className={`bg-gradient-to-r ${step.bg} text-white p-5 rounded-full mb-4`}

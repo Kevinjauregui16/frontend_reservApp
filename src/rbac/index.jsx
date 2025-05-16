@@ -2,7 +2,6 @@ import { SignIn, SignUp } from "@clerk/clerk-react";
 
 //import Dashboard from "../components/Dashboard";
 import Dashboard from "../pages/Dashboard";
-import PrivacyPolicy from "../pages/PrivacyPolicy";
 
 export const routes = {
   private: [
@@ -19,10 +18,6 @@ export const routes = {
     {
       path: "/sign-up",
       element: <SignUp routing="path" path="/sign-up" />,
-    },
-    {
-      path: "/privacy-policy",
-      element: <PrivacyPolicy />,
-    },
+    }
   ],
 };

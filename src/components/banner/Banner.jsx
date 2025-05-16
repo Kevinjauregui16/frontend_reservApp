@@ -1,4 +1,5 @@
 import { IoLocationOutline, IoSearchOutline } from "react-icons/io5";
+import { SignedIn, SignedOut } from "@clerk/clerk-react";
 
 export default function Banner() {
   return (
