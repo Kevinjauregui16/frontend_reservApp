@@ -4,14 +4,31 @@ const basePath = "reservations";
 
 const reservations = api.injectEndpoints({
   endpoints: (build) => ({
-    reserveService: build.mutation({
+    createReservation: build.mutation({
       query: (body) => ({
         url: basePath,
         method: "POST",
         body,
       }),
     }),
+    getReservationsByService: build.query({
+      query: (serviceId) => `${basePath}/by-service/${serviceId}`,
+    }),
+    getReservationsByUser: build.query({
+      query: (userId) => `users/${userId}/${basePath}`,
+    }),
+    ReservationDelete: build.mutation({
+      query: (reservationId) => ({
+        url: `${basePath}/${reservationId}`,
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 
-export const { useReserveServiceMutation } = reservations;
+export const {
+  useCreateReservationMutation,
+  useGetReservationsByServiceQuery,
+  useGetReservationsByUserQuery,
+  useReservationDeleteMutation,
+} = reservations;

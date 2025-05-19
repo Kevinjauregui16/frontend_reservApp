@@ -1,18 +1,79 @@
 import { useState } from "react";
-import { useGetServicesQuery } from "../../services/services";
+import { useGetUserIdQuery } from "../../services/users";
+import {
+  useGetServicesQuery,
+  useGetServicesSchedulesQuery,
+} from "../../services/services";
+import { useCreateReservationMutation } from "../../services/reservations";
 import { IoLocationOutline } from "react-icons/io5";
 import { CgTime } from "react-icons/cg";
 import { TbQuestionMark } from "react-icons/tb";
 import Calendar from "react-calendar"; // Importar react-calendar
 import "react-calendar/dist/Calendar.css"; // Importar estilos de react-calendar
+import { SignInButton } from "@clerk/clerk-react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
-export default function BannerServices() {
+export default function BannerServices({ user }) {
+  const navigate = useNavigate();
   const [selected, setSelected] = useState("Todos");
+  const [selectedTime, setSelectedTime] = useState(null);
   const { data: services } = useGetServicesQuery();
   const [openModal, setOpenModal] = useState(false);
   const [selectedService, setSelectedService] = useState(null);
   const [date, setDate] = useState(new Date()); // Estado para la fecha seleccionada
   const [availableTimes, setAvailableTimes] = useState([]); // Estado para los horarios disponibles
+  const { data: schedules } = useGetServicesSchedulesQuery(
+    selectedService?.id,
+    {
+      skip: !selectedService,
+    }
+  );
+  const clerkId = user?.id; // Obtener el ID del usuario actual
+  const { data } = useGetUserIdQuery(clerkId, {
+    skip: !clerkId,
+  });
+  const userId = data?.id; // Obtener el ID del usuario
+  const [createReservation] = useCreateReservationMutation();
+
+  const serviceId = selectedService?.id; // Obtener el ID del servicio seleccionado
+
+  const sumarMinutos = (fechaHora, minutos) => {
+    const fecha = new Date(fechaHora.replace(" ", "T"));
+    fecha.setMinutes(fecha.getMinutes() + minutos);
+    // Formatear igual que getFechaHora
+    const year = fecha.getFullYear();
+    const month = (fecha.getMonth() + 1).toString().padStart(2, "0");
+    const day = fecha.getDate().toString().padStart(2, "0");
+    const hourStr = fecha.getHours().toString().padStart(2, "0");
+    const minStr = fecha.getMinutes().toString().padStart(2, "0");
+    return `${year}-${month}-${day} ${hourStr}:${minStr}:00`;
+  };
+
+  const startTime = selectedTime;
+  const duration = selectedService?.duration;
+
+  const endTime =
+    startTime && duration ? sumarMinutos(startTime, duration) : null;
+
+  const handleReservation = async (serviceId, userId, startTime, endTime) => {
+    try {
+      const response = await createReservation({
+        service_id: serviceId,
+        user_id: userId,
+        start_time: startTime,
+        end_time: endTime,
+      }).unwrap();
+      toast.success("Reserva creada con éxito");
+    } catch (error) {
+      const backendMsg = error?.data?.message;
+      if (backendMsg) {
+        toast.error(backendMsg);
+      } else {
+        toast.error("Error al crear la reserva");
+      }
+    }
+  };
 
   // Obtener categorías únicas de los servicios
   const categories = [
@@ -49,20 +110,85 @@ export default function BannerServices() {
     setAvailableTimes([]); // Limpiar horarios disponibles al cerrar el modal
   };
 
+  const diasSemana = [
+    "domingo",
+    "lunes",
+    "martes",
+    "miércoles",
+    "jueves",
+    "viernes",
+    "sábado",
+  ];
+
+  const generarHorarios = (start, end, intervaloMin = 60) => {
+    const horarios = [];
+    let [h, m, s] = start.split(":").map(Number);
+    let [eh, em, es] = end.split(":").map(Number);
+
+    while (h < eh || (h === eh && m < em)) {
+      const hora = `${h.toString().padStart(2, "0")}:${m
+        .toString()
+        .padStart(2, "0")}`;
+      // Formato AM/PM
+      const ampm = h < 12 ? "AM" : h === 12 ? (m === 0 ? "PM" : "PM") : "PM";
+      let displayHour = h % 12 === 0 ? 12 : h % 12;
+      horarios.push(
+        `${displayHour.toString().padStart(2, "0")}:${m
+          .toString()
+          .padStart(2, "0")} ${ampm}`
+      );
+      m += intervaloMin;
+      if (m >= 60) {
+        h += Math.floor(m / 60);
+        m = m % 60;
+      }
+    }
+    return horarios;
+  };
+
   const handleDateChange = (selectedDate) => {
     setDate(selectedDate);
 
-    // Simular horarios disponibles para la fecha seleccionada
-    const times = [
-      "09:00 AM",
-      "10:00 AM",
-      "11:00 AM",
-      "01:00 PM",
-      "02:00 PM",
-      "03:00 PM",
-    ];
-    setAvailableTimes(times);
+    if (!schedules) {
+      setAvailableTimes([]);
+      return;
+    }
+
+    // Obtener el día de la semana en español
+    const dia = diasSemana[selectedDate.getDay()];
+
+    // Buscar el horario correspondiente a ese día
+    const horarioDia = schedules.find(
+      (s) => s.day_of_week.toLowerCase() === dia
+    );
+
+    if (horarioDia) {
+      // Generar los intervalos de tiempo (ejemplo: cada 1 hora)
+      const times = generarHorarios(
+        horarioDia.start_time,
+        horarioDia.end_time,
+        60
+      );
+      setAvailableTimes(times);
+    } else {
+      setAvailableTimes([]);
+    }
   };
+
+  const getFechaHora = (date, time) => {
+    const [hourMin, ampm] = time.split(" ");
+    let [hour, min] = hourMin.split(":").map(Number);
+    if (ampm === "PM" && hour !== 12) hour += 12;
+    if (ampm === "AM" && hour === 12) hour = 0;
+    const hourStr = hour.toString().padStart(2, "0");
+    const minStr = min.toString().padStart(2, "0");
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const day = date.getDate().toString().padStart(2, "0");
+    return `${year}-${month}-${day} ${hourStr}:${minStr}:00`;
+  };
+
+  const fechaHora = (time) => getFechaHora(date, time);
 
   return (
     <div className="my-10 max-w-screen-xl mx-auto">
@@ -92,7 +218,7 @@ export default function BannerServices() {
           >
             <div className="w-full h-1/3 flex items-center justify-center mt-4">
               <img
-                src="/Barber.jpeg"
+                src={`/${service.category.toLowerCase()}.png`}
                 alt={service.name}
                 className="w-[90%] h-full object-cover rounded-2xl"
               />
@@ -138,23 +264,39 @@ export default function BannerServices() {
                   Reserva: ${service.price}
                 </p>
               </div>
-              <button
-                className="bg-gradient-to-r from-secondary to-primary hover:scale-105 transition-all duration-300 mt-6 rounded-xl py-2 text-white"
-                onClick={() => handleServiceClick(service)}
-              >
-                Reservar ahora
-              </button>
+              {user ? (
+                <button
+                  className="bg-gradient-to-r from-secondary to-primary hover:scale-105 transition-all duration-300 mt-6 rounded-xl py-2 text-white"
+                  onClick={() => handleServiceClick(service)}
+                >
+                  Reservar ahora
+                </button>
+              ) : (
+                <SignInButton mode="modal">
+                  <button className="bg-gradient-to-r from-secondary to-primary hover:scale-105 transition-all duration-300 mt-6 rounded-xl py-2 text-white">
+                    Reservar ahora
+                  </button>
+                </SignInButton>
+              )}
             </div>
           </div>
         ))}
       </div>
       <div className="flex justify-center mt-8">
-        <button
-          className="border border-secondary text-secondary py-2 px-4 rounded-lg hover:bg-purple-100 hover:text-black text-sm transition-all duration-300"
-          onClick={() => console.log("Ver más servicios")}
-        >
-          Ver todos los servicios
-        </button>
+        {user ? (
+          <button
+            className="border border-secondary text-secondary py-2 px-4 rounded-lg hover:bg-purple-100 hover:text-black text-sm transition-all duration-300"
+            onClick={() => navigate("/services")}
+          >
+            Ver todos los servicios
+          </button>
+        ) : (
+          <SignInButton mode="modal">
+            <button className="border border-secondary text-secondary py-2 px-4 rounded-lg hover:bg-purple-100 hover:text-black text-sm transition-all duration-300">
+              Ver todos los servicios
+            </button>
+          </SignInButton>
+        )}
       </div>
 
       {/* Modal */}
@@ -216,11 +358,7 @@ export default function BannerServices() {
                   </div>
                 )}
                 {/* Calendario */}
-                <div className="">
-                  {/* <div className="w-1/2 ">
-                    <Calendar onChange={setDate} value={date} />
-                  </div>
-                  <div className="w-1/2 bg-blue-400"> hola mundo</div> */}
+                <div>
                   <div className="flex flex-col justify-center">
                     <div className="m-auto">
                       <Calendar onChange={handleDateChange} value={date} />
@@ -234,14 +372,24 @@ export default function BannerServices() {
                           availableTimes.map((time, index) => (
                             <li
                               key={index}
-                              className="text-gray-700 text-sm bg-gray-100 py-1 px-2 rounded-xl shadow-lg"
+                              className={`text-gray-700 text-sm bg-gray-100 py-1 px-2 rounded-xl shadow-lg cursor-pointer transition-all duration-300
+                                     ${
+                                       selectedTime === fechaHora(time)
+                                         ? "bg-secondary text-white scale-105"
+                                         : "hover:bg-secondary hover:text-white"
+                                     }`}
+                              onClick={() => {
+                                setSelectedTime(fechaHora(time));
+                              }}
                             >
                               {time}
                             </li>
                           ))
                         ) : (
                           <li className="col-span-4 flex justify-center items-center text-gray-500">
-                            Selecciona una fecha.
+                            {date
+                              ? "Sin disponibilidad para esta fecha"
+                              : "Selecciona una fecha para ver horarios"}
                           </li>
                         )}
                       </ul>
@@ -254,7 +402,16 @@ export default function BannerServices() {
                 <button
                   type="button"
                   className="text-white bg-gradient-to-r from-secondary to-primary font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-                  onClick={closeModal}
+                  onClick={() => {
+                    if (!selectedTime) {
+                      alert(
+                        "Selecciona un horario antes de confirmar la reserva."
+                      );
+                      return;
+                    }
+                    handleReservation(serviceId, userId, selectedTime, endTime);
+                    closeModal();
+                  }}
                 >
                   Confirmar Reserva
                 </button>

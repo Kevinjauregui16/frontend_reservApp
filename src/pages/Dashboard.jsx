@@ -6,15 +6,19 @@ import BannerFeaturedBusinesses from "../components/featuredBusinesses/BannerFea
 import BannerReadyToBook from "../components/readyToBook/BannerReadyToBook";
 import Footer from "../components/footer/Footer";
 
+import { useUser } from "@clerk/clerk-react";
+
 export default function Dashboard() {
+  const { user } = useUser();
+
   return (
     <>
-      <Navbar />
-      <Banner />
-      <BannerServices />
+      <Navbar user={user} />
+      <Banner user={user} />
+      <BannerServices user={user} />
       <BannerHowItWork />
       <BannerFeaturedBusinesses />
-      <BannerReadyToBook />
+      <BannerReadyToBook user={user} />
       <Footer />
     </>
   );
