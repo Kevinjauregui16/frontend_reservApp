@@ -284,8 +284,8 @@ export default function AllServices() {
           Nuestros servicios
         </h2>
         <div className="md:w-1/2 flex gap-2 justify-end">
-          <div className="flex items-center border rounded-xl px-2">
-            <IoSearchOutline className="text-gray-500 mr-3 text-xl" />
+          <div className="flex items-center border rounded-xl px-2 max-md:w-2/3">
+            <IoSearchOutline className="text-gray-500 md:mr-3 text-xl" />
             <input
               type="search"
               name=""
@@ -295,7 +295,7 @@ export default function AllServices() {
               className="flex-1 outline-none border-none placeholder:text-gray-500"
             />
           </div>
-          <div className="bg-gradient-to-r from-secondary to-primary rounded-lg">
+          <div className="bg-gradient-to-r from-secondary to-primary rounded-lg max-md:w-1/3">
             <select
               className="bg-transparent text-white border-none rounded-lg w-full"
               value={category}

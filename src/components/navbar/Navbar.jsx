@@ -36,6 +36,19 @@ export default function Navbar({ user }) {
     setMenuOpen(false);
   }, [location.pathname]);
 
+  // Función para renderizar enlaces
+  const renderNavLink = (to, label, isMobile = false) => {
+    const baseClass = isMobile
+      ? "block py-2 px-3 text-gray-900 rounded-sm hover:text-secondary"
+      : "py-2 px-3 text-gray-900 rounded-sm hover:text-secondary";
+    const activeClass = location.pathname === to ? "text-secondary" : "";
+    return (
+      <Link to={to} className={`${baseClass} ${activeClass}`}>
+        {label}
+      </Link>
+    );
+  };
+
   return (
     <nav className="bg-white bg-opacity-90 sticky top-0 z-50">
       <div className="max-w-screen-xl mx-auto px-4 py-3 flex items-center justify-between">
@@ -50,30 +63,9 @@ export default function Navbar({ user }) {
         <SignedIn>
           <div className="hidden md:flex flex-1 items-center justify-center">
             <ul className="flex flex-row space-x-8 font-medium">
-              <li>
-                <Link
-                  to="/"
-                  className="py-2 px-3 text-gray-900 rounded-sm hover:text-secondary"
-                >
-                  Inicio
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/services"
-                  className="py-2 px-3 text-gray-900 rounded-sm hover:text-secondary"
-                >
-                  Servicios
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/reservations"
-                  className="py-2 px-3 text-gray-900 rounded-sm hover:text-secondary"
-                >
-                  Mis Reservas
-                </Link>
-              </li>
+              <li>{renderNavLink("/", "Inicio")}</li>
+              <li>{renderNavLink("/services", "Servicios")}</li>
+              <li>{renderNavLink("/reservations", "Mis Reservas")}</li>
             </ul>
           </div>
         </SignedIn>
@@ -82,7 +74,9 @@ export default function Navbar({ user }) {
         <div className="hidden md:flex items-center space-x-4">
           <UserButton />
           {user && (
-            <span className="text-gray-900 font-medium">{userName}</span>
+            <span className="whitespace-nowrap text-transparent bg-clip-text bg-gradient-to-r from-secondary to-primary font-medium">
+              {userName}
+            </span>
           )}
           <SignedOut>
             <SignInButton
@@ -132,31 +126,10 @@ export default function Navbar({ user }) {
         id="navbar-user"
       >
         <ul className="flex flex-col font-medium p-4 space-y-2 bg-white rounded-lg shadow">
-          <li>
-            <Link
-              to="/"
-              className="block py-2 px-3 text-gray-900 rounded-sm hover:text-secondary"
-            >
-              Inicio
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/services"
-              className="block py-2 px-3 text-gray-900 rounded-sm hover:text-secondary"
-            >
-              Servicios
-            </Link>
-          </li>
+          <li>{renderNavLink("/", "Inicio", true)}</li>
+          <li>{renderNavLink("/services", "Servicios", true)}</li>
           <SignedIn>
-            <li>
-              <Link
-                to="/reservations"
-                className="block py-2 px-3 text-gray-900 rounded-sm hover:text-secondary"
-              >
-                Mis Reservas
-              </Link>
-            </li>
+            <li>{renderNavLink("/reservations", "Mis Reservas", true)}</li>
           </SignedIn>
           <SignedOut>
             <li>

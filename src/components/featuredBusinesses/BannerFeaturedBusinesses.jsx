@@ -45,10 +45,10 @@ export default function BannerFeaturedBusinesses() {
               <span className="text-gray-400 text-4xl">✨</span>
             </div>
             <div className="p-4">
-              <h3 className="text-lg font-semibold text-gray-400">
+              <h3 className="text-lg font-semibold text-gray-600">
                 {negocio.nombre}
               </h3>
-              <p className="text-gray-400 font-medium">{negocio.location}</p>
+              <p className="text-gray-500 font-medium">{negocio.location}</p>
               <div className="flex items-center mt-2">
                 <svg
                   className="w-4 h-4 text-yellow-300 mr-1"

@@ -13,8 +13,8 @@ export default {
       },
       height: {
         banner: "80vh",
-        bannerMobile: "60vh",
-        98: "25rem",
+        bannerMobile: "70vh",
+        98: "26rem",
       },
     },
   },

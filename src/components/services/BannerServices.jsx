@@ -300,17 +300,10 @@ export default function BannerServices({ user }) {
       </div>
 
       {/* Modal */}
-      {openModal && (
-        <div
-          id="default-modal"
-          tabIndex="-1"
-          aria-hidden="true"
-          className="fixed top-0 left-0 right-0 z-50 flex justify-center items-center w-full h-full bg-black bg-opacity-50"
-        >
+      {openModal && selectedService && (
+        <div className="fixed top-0 left-0 right-0 z-50 flex justify-center items-center w-full h-full bg-black bg-opacity-50">
           <div className="relative p-4 w-full max-w-2xl max-h-full">
-            {/* Modal content */}
             <div className="relative bg-white rounded-xl">
-              {/* Modal header */}
               <div className="flex items-center justify-between p-4 rounded-t">
                 <h3 className="text-xl font-semibold text-gray-900">
                   Reservar Servicio
@@ -338,49 +331,43 @@ export default function BannerServices({ user }) {
                   <span className="sr-only">Cerrar modal</span>
                 </button>
               </div>
-              {/* Modal body */}
               <div className="p-4 space-y-4 flex flex-col h-full">
-                {selectedService && (
-                  <div className="w-full flex justify-evenly bg-gray-100 shadow-lg rounded-xl py-4">
-                    <p className="font-bold text-md text-gray-900">
-                      {selectedService.description}
-                    </p>
-                    <p className="text-sm leading-relaxed text-gray-500 flex items-center gap-1">
-                      <IoLocationOutline />
-                      {selectedService.location}
-                    </p>
-                    <p className="text-sm leading-relaxed text-gray-500 flex items-center gap-1">
-                      <CgTime /> {selectedService.duration} minutos
-                    </p>
-                    <p className="bg-purple-400 border border-purple-700 bg-opacity-20 rounded-xl px-2 py-1 text-sm">
-                      ${selectedService.price}
-                    </p>
-                  </div>
-                )}
-                {/* Calendario */}
+                <div className="w-full flex flex-col md:flex-row justify-evenly max-md:items-center bg-gray-100 shadow-lg rounded-xl py-4">
+                  <p className="font-bold text-md text-gray-900">
+                    {selectedService.description}
+                  </p>
+                  <p className="text-sm leading-relaxed text-gray-500 flex items-center gap-1">
+                    <IoLocationOutline />
+                    {selectedService.location}
+                  </p>
+                  <p className="text-sm leading-relaxed text-gray-500 flex items-center gap-1">
+                    <CgTime /> {selectedService.duration} minutos
+                  </p>
+                  <p className="bg-purple-400 border border-purple-700 bg-opacity-20 rounded-xl px-2 py-1 text-sm">
+                    ${selectedService.price}
+                  </p>
+                </div>
                 <div>
                   <div className="flex flex-col justify-center">
-                    <div className="m-auto">
+                    <div className="md:m-auto">
                       <Calendar onChange={handleDateChange} value={date} />
                     </div>
                     <div className="flex flex-col justify-center items-center p-2 rounded-xl">
                       <h4 className="text-sm font-semibold text-gray-800">
                         Horarios disponibles:
                       </h4>
-                      <ul className="grid grid-cols-4 gap-2 mt-2">
+                      <ul className="grid grid-cols-3 md:grid-cols-4 gap-2 mt-2">
                         {availableTimes.length > 0 ? (
                           availableTimes.map((time, index) => (
                             <li
                               key={index}
-                              className={`text-gray-700 text-sm bg-gray-100 py-1 px-2 rounded-xl shadow-lg cursor-pointer transition-all duration-300
-                                     ${
-                                       selectedTime === fechaHora(time)
-                                         ? "bg-secondary text-white scale-105"
-                                         : "hover:bg-secondary hover:text-white"
-                                     }`}
-                              onClick={() => {
-                                setSelectedTime(fechaHora(time));
-                              }}
+                              className={`text-gray-700 text-sm py-1 px-2 rounded-xl shadow-lg cursor-pointer transition-all duration-300
+                                ${
+                                  selectedTime === fechaHora(time)
+                                    ? "bg-secondary text-white scale-105"
+                                    : "bg-gray-100 hover:bg-secondary hover:text-white"
+                                }`}
+                              onClick={() => setSelectedTime(fechaHora(time))}
                             >
                               {time}
                             </li>
@@ -397,7 +384,6 @@ export default function BannerServices({ user }) {
                   </div>
                 </div>
               </div>
-              {/* Modal footer */}
               <div className="flex items-center justify-center pb-4">
                 <button
                   type="button"
@@ -409,9 +395,15 @@ export default function BannerServices({ user }) {
                       );
                       return;
                     }
-                    handleReservation(serviceId, userId, selectedTime, endTime);
+                    handleReservation(
+                      selectedService.id,
+                      userId,
+                      selectedTime,
+                      endTime
+                    );
                     closeModal();
                   }}
+                  disabled={!selectedTime}
                 >
                   Confirmar Reserva
                 </button>

@@ -37,7 +37,9 @@ export default function BannerHowItWork() {
               >
                 {step.icon}
               </div>
-              <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
+              <h3 className="text-xl font-semibold mb-2 text-gray-600">
+                {step.title}
+              </h3>
               <p className="text-gray-500">{step.description}</p>
             </div>
           ))}

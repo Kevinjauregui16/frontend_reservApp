@@ -25,7 +25,7 @@ export default function Banner({ user }) {
           <h2 className="text-4xl md:text-6xl font-bold whitespace-nowrap text-transparent bg-clip-text bg-gradient-to-r from-secondary to-primary">
             Reserva servicios <br /> en segundos
           </h2>
-          <p className="text-lg md:text-2xl text-white">
+          <p className="text-xl md:text-2xl text-white">
             Barberías, salones de belleza, dentistas y más. Todo en un solo
             lugar.
           </p>

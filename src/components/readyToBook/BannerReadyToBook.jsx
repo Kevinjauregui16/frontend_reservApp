@@ -3,7 +3,7 @@ import { SignInButton } from "@clerk/clerk-react";
 
 export default function BannerReadyToBook({ user }) {
   return (
-    <div className="bg-gradient-to-r from-purple-600 via-indigo-600 to-blue-600 py-16 text-center text-white mb-12">
+    <div className="bg-gradient-to-r from-purple-600 via-indigo-600 to-blue-600 py-16 text-center text-white mb-12 px-4">
       <h2 className="text-3xl md:text-4xl font-bold mb-4">
         ¿Listo para reservar?
       </h2>
