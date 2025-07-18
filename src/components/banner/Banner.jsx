@@ -22,12 +22,11 @@ export default function Banner({ user }) {
     <div className="h-bannerMobile md:h-banner bg-gradient-to-r from-purple-200 to-blue-200 flex">
       <div className="max-w-screen-xl flex flex-col md:flex-row justify-center items-center mx-auto px-4 py-4 md:pt-0">
         <div className="w-full md:w-1/2 flex flex-col justify-center items-start gap-4">
-          <h2 className="text-4xl md:text-6xl font-bold whitespace-nowrap text-transparent bg-clip-text bg-gradient-to-r from-secondary to-primary">
+          <h2 className="text-4xl md:text-6xl font-bold whitespace-nowrap text-transparent bg-clip-text bg-gradient-to-r from-secondary to-primary py-4">
             Reserva servicios <br /> en segundos
           </h2>
-          <p className="text-xl md:text-2xl text-white">
-            Barberías, salones de belleza, dentistas y más. Todo en un solo
-            lugar.
+          <p className="text-xl md:text-2xl text-white font-semibold">
+            Todo tipo de servicios, una sola plataforma. ¡Reserva ahora!
           </p>
           <div className="flex flex-col bg-white shadow-2xl rounded-xl p-6 mt-4 gap-4 w-full">
             <div className="flex items-center border rounded-xl px-4 py-2">

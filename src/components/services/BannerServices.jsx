@@ -193,7 +193,9 @@ export default function BannerServices({ user }) {
   return (
     <div className="my-10 max-w-screen-xl mx-auto">
       <div className="flex flex-col items-center justify-center">
-        <h2 className="text-3xl text-primary font-bold">Nuestros servicios</h2>
+        <h2 className="text-3xl text-primary font-bold">
+          Servicios de profesionales
+        </h2>
         <div className="bg-gray-50 mt-8 text-sm text-gray-500 font-semibold rounded-lg max-md:grid grid-cols-3">
           {categories.slice(0, 3).map((category) => (
             <button
@@ -212,7 +214,7 @@ export default function BannerServices({ user }) {
         {filteredServices?.map((service) => (
           <div
             key={service.id}
-            className={`flex flex-col h-98 rounded-lg shadow-lg border ${
+            className={`flex flex-col h-98 rounded-2xl shadow-lg border ${
               categoryColors[service.category] || categoryColors.Default
             } bg-opacity-70`}
           >
@@ -220,7 +222,7 @@ export default function BannerServices({ user }) {
               <img
                 src={`/${service.category.toLowerCase()}.png`}
                 alt={service.name}
-                className="w-[90%] h-full object-cover rounded-2xl"
+                className="w-[90%] h-full object-cover rounded-xl"
               />
             </div>
             <div className="w-[90%] h-2/3 mt-4 mx-auto flex flex-col">

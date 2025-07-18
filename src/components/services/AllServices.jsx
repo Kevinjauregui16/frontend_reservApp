@@ -281,7 +281,7 @@ export default function AllServices() {
     <div className="max-w-screen-xl mx-auto py-10 px-4">
       <div className="flex flex-col md:flex-row gap-2 justify-between mb-12">
         <h2 className="text-3xl font-bold whitespace-nowrap text-transparent bg-clip-text bg-gradient-to-r from-secondary to-primary">
-          Nuestros servicios
+          Servicios profesionales
         </h2>
         <div className="md:w-1/2 flex gap-2 justify-end">
           <div className="flex items-center border rounded-xl px-2 max-md:w-2/3">
@@ -328,7 +328,7 @@ export default function AllServices() {
           {filteredServices.map((service) => (
             <div
               key={service.id}
-              className={`flex flex-col h-98 rounded-lg shadow-lg border ${
+              className={`flex flex-col h-98 rounded-2xl shadow-lg border ${
                 categoryColors[service.category] || categoryColors.Default
               } bg-opacity-70`}
             >
@@ -336,7 +336,7 @@ export default function AllServices() {
                 <img
                   src={`/${service.category.toLowerCase()}.png`}
                   alt={service.name}
-                  className="w-[90%] h-full object-cover rounded-2xl"
+                  className="w-[90%] h-full object-cover rounded-xl"
                 />
               </div>
               <div className="w-[90%] h-2/3 mt-4 mx-auto flex flex-col">

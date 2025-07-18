@@ -6,7 +6,7 @@ export default function Footer() {
           <div className="mb-6 md:mb-0">
             <a href="/" className="flex items-center">
               <span className="self-center text-2xl font-semibold whitespace-nowrap text-transparent bg-clip-text bg-gradient-to-r from-secondary to-primary">
-                ✨ReservApp
+                ✨ReservaPro
               </span>
             </a>
           </div>

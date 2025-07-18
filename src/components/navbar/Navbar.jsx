@@ -55,7 +55,7 @@ export default function Navbar({ user }) {
         {/* Logo */}
         <Link to="/" className="flex items-center">
           <span className="text-2xl font-semibold whitespace-nowrap text-transparent bg-clip-text bg-gradient-to-r from-secondary to-primary">
-            ✨ReservApp
+            ✨ReservaPro
           </span>
         </Link>
 
