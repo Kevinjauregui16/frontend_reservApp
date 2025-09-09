@@ -10,6 +10,16 @@ export default function Footer() {
               </span>
             </a>
           </div>
+          <div className="flex flex-col">
+            <a
+              href="/login"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-500 hover:text-primary text-sm"
+            >
+              Ingresar como Administrador
+            </a>
+          </div>
         </div>
         <hr className="my-6 border-gray-200 sm:mx-auto lg:my-8" />
         <div className="sm:flex sm:items-center sm:justify-between">
