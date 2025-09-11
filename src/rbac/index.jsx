@@ -1,7 +1,10 @@
 import Dashboard from "../pages/Dashboard";
 import Services from "../pages/Services";
 import Reservations from "../pages/Reservations";
+
 import DashboardAdmin from "../pages/Dashboard_admin/DashboardAdmin";
+import CreateStore from "../pages/Dashboard_admin/Stores/CreateStore";
+
 import Login from "../pages/Login/Login";
 
 export const routes = {
@@ -27,6 +30,10 @@ export const routes = {
     {
       path: "/dashboard-admin",
       element: <DashboardAdmin />,
+    },
+    {
+      path: "/dashboard-admin/create-store",
+      element: <CreateStore />,
     }
     // {
     //   path: "/sign-in",
