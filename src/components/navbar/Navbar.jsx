@@ -5,13 +5,21 @@ import {
   SignInButton,
 } from "@clerk/clerk-react";
 import { Link, useLocation } from "react-router-dom";
-import { useRegisterUserMutation } from "../../services/users";
+import {
+  useRegisterUserMutation,
+  useGetUserIdQuery,
+} from "../../services/users";
 import { useEffect, useState } from "react";
 
 export default function Navbar({ user }) {
   const [registerUser] = useRegisterUserMutation();
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
+
+  const { data: userIdData, isLoading: isUserIdLoading } = useGetUserIdQuery(
+    user?.id,
+    { skip: !user }
+  );
 
   const userName =
     user && user.fullName && user.fullName.trim() !== ""
@@ -21,7 +29,7 @@ export default function Navbar({ user }) {
       : "Usuario";
 
   useEffect(() => {
-    if (user) {
+    if (user && !isUserIdLoading && !userIdData) {
       const userData = {
         clerk_id: user.id,
         name: userName,
@@ -29,7 +37,7 @@ export default function Navbar({ user }) {
       };
       registerUser(userData);
     }
-  }, [user, registerUser]);
+  }, [user, registerUser, userIdData, isUserIdLoading, userName]);
 
   // Cierra el menú móvil al cambiar de ruta
   useEffect(() => {

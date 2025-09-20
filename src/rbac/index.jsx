@@ -1,13 +1,15 @@
-import Dashboard from "../pages/Dashboard";
-import Services from "../pages/Services";
-import Reservations from "../pages/Reservations";
+import Home from "../pages/Home/Home";
+import Services from "../pages/Home/Services";
+import Reservations from "../pages/Home/Reservations";
 
-import DashboardAdmin from "../pages/Dashboard_admin/DashboardAdmin";
-import CreateStore from "../pages/Dashboard_admin/Stores/CreateStore";
+import Dashboard from "../pages/Dashboard_admin/Dashboard";
 
 import Login from "../pages/Login/Login";
 
+import TokenRoute from "./guards/TokenRoute";
+
 export const routes = {
+  //rutas para usuarios autenticados con clerk
   private: [
     {
       path: "/services",
@@ -18,23 +20,29 @@ export const routes = {
       element: <Reservations />,
     },
   ],
+
+  //rutas para super admin y admins
+  tokenRoute: [
+    {
+      path: "/dashboard-super-admin",
+      element: (
+        <TokenRoute>
+          <Dashboard />
+        </TokenRoute>
+      ),
+    },
+  ],
+
+  //rutas publicas
   public: [
     {
       path: "/",
-      element: <Dashboard />,
+      element: <Home />,
     },
     {
       path: "/login",
       element: <Login />,
     },
-    {
-      path: "/dashboard-admin",
-      element: <DashboardAdmin />,
-    },
-    {
-      path: "/dashboard-admin/create-store",
-      element: <CreateStore />,
-    }
     // {
     //   path: "/sign-in",
     //   element: <SignInPage />,

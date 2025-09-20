@@ -6,7 +6,7 @@ const clients = api.injectEndpoints({
   endpoints: (build) => ({
     registerClient: build.mutation({
       query: (body) => ({
-        url: `admin/${basePath}`,
+        url: `super-admin/${basePath}`,
         method: "POST",
         body,
       }),

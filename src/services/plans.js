@@ -1,16 +1,16 @@
 import { api } from "./api";
 
-const basePath = "stores";
+const basePath = "plans";
 
-const stores = api.injectEndpoints({
+const plans = api.injectEndpoints({
   endpoints: (build) => ({
-    listStores: build.query({
+    listplans: build.query({
       query: () => ({
         url: `super-admin/${basePath}`,
         method: "GET",
       }),
     }),
-    createStore: build.mutation({
+    createPlan: build.mutation({
       query: (body) => ({
         url: `super-admin/${basePath}`,
         method: "POST",
@@ -20,4 +20,4 @@ const stores = api.injectEndpoints({
   }),
 });
 
-export const { useCreateStoreMutation, useListStoresQuery } = stores;
+export const { useListplansQuery, useCreatePlanMutation } = plans;

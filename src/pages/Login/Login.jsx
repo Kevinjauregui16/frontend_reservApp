@@ -23,7 +23,8 @@ export default function AuthPage() {
     e.preventDefault();
     try {
       const response = await loginUser({ email, password }).unwrap();
-      navigate("/dashboard-admin");
+      localStorage.setItem("token", response.token);
+      navigate("/dashboard-super-admin");
     } catch (error) {
       toast.error(error?.data?.message || "Credenciales incorrectas");
     }
