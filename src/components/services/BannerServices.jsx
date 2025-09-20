@@ -307,7 +307,7 @@ export default function BannerServices({ user }) {
           <div className="relative p-4 w-full max-w-2xl max-h-full">
             <div className="relative bg-white rounded-xl">
               <div className="flex items-center justify-between p-4 rounded-t">
-                <h3 className="text-xl font-semibold text-gray-900">
+                <h3 className="text-xl font-semibold text-gray-600">
                   Reservar Servicio
                 </h3>
                 <button

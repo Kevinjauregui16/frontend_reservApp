@@ -25,7 +25,7 @@ export default function BannerHowItWork() {
   return (
     <div className="w-full h-full bg-gray-100 py-10">
       <div className="max-w-screen-xl flex flex-col items-center mx-auto text-center">
-        <h2 className="text-3xl font-bold text-primary mb-12">Cómo funciona</h2>
+        <h2 className="text-3xl font-bold text-primary mb-12">Cómo funciona?</h2>
         <div className="flex flex-col md:flex-row justify-center gap-12">
           {steps.map((step, index) => (
             <div
