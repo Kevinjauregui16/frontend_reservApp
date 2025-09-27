@@ -29,6 +29,8 @@ export default function DashboardAdmin() {
   const users_count = data?.users_count || 0;
   const clients_count = data?.clients_count || 0;
   const plans_count = data?.plans_count || 0;
+  const user_role = data?.user_role;
+  const user_name = data?.user_name;
 
   useEffect(() => {
     refetch();
@@ -148,9 +150,11 @@ export default function DashboardAdmin() {
             <span className="text-3xl font-extrabold whitespace-nowrap text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-500">
               ✨ReservaPro
             </span>
-            <span className="ml-2 px-2 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-semibold tracking-wide shadow-sm">
-              Super Admin
-            </span>
+            {!isLoading && (
+              <span className="ml-2 px-2 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-semibold tracking-wide shadow-sm">
+                {user_role}
+              </span>
+            )}
           </div>
           <div className="flex items-center gap-4">
             <div className="bg-gradient-to-br from-blue-500 to-purple-500 text-white rounded-full p-2">
@@ -160,9 +164,11 @@ export default function DashboardAdmin() {
               <p className="text-lg text-gray-500 font-medium leading-tight">
                 Hola,
               </p>
-              <p className="text-2xl font-bold text-blue-700 leading-tight">
-                Kevin Jauregui
-              </p>
+              {!isLoading && (
+                <p className="text-2xl font-bold text-blue-700 leading-tight">
+                  {user_name}
+                </p>
+              )}
               <span className="text-xs text-gray-400">
                 ¡Bienvenido de nuevo!
               </span>
