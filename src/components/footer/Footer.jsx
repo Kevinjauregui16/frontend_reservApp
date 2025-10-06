@@ -1,5 +1,25 @@
+import { FiLogOut } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
+import { useLogoutUserMutation } from "../../services/login";
+
 export default function Footer({ data }) {
   const user_role = data?.user_role || "";
+  const navigate = useNavigate();
+  const [logoutUser] = useLogoutUserMutation();
+
+  const isAdminAndSuperAdmin =
+    user_role === "admin" || user_role === "superadmin";
+
+  const handleLogout = async () => {
+    try {
+      await logoutUser().unwrap();
+      localStorage.removeItem("token");
+      navigate("/login");
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
+  };
+
   return (
     <footer className="bg-white">
       <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
@@ -11,7 +31,18 @@ export default function Footer({ data }) {
               </span>
             </a>
           </div>
-          {user_role !== "superadmin" && (
+          {isAdminAndSuperAdmin ? (
+            <div className="flex flex-col items-end">
+              <button
+                onClick={handleLogout}
+                title="Cerrar sesión"
+                className="flex items-center gap-2 px-3 py-2 rounded-2xl hover:bg-red-100 text-red-400 font-semibold transition"
+              >
+                <FiLogOut className="w-5 h-5" />
+                Cerrar sesión
+              </button>
+            </div>
+          ) : (
             <div className="flex flex-col">
               <a
                 href="/login"

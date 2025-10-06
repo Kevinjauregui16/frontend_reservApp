@@ -175,6 +175,14 @@ export default function CreateStoreModal({ isOpen, onClose, onSuccess }) {
             className="w-full border border-blue-200 rounded-xl px-4 py-2 bg-blue-50 focus:ring-2 focus:ring-blue-200 focus:outline-none placeholder:text-gray-400"
             required
           />
+          <a
+            className="text-blue-500 hover:underline text-xs ml-2"
+            href="http://google.com/maps"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Ir a Google Maps
+          </a>
         </div>
         <div className="md:col-span-2">
           <input
