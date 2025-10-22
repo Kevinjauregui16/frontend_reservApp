@@ -3,6 +3,7 @@ import Services from "../pages/Home/Services";
 import Reservations from "../pages/Home/Reservations";
 
 import Dashboard from "../pages/Dashboard_admin/Dashboard";
+import { Stores } from "../pages/Dashboard_admin/Stores";
 
 import Login from "../pages/Login/Login";
 
@@ -28,6 +29,14 @@ export const routes = {
       element: (
         <TokenRoute>
           <Dashboard />
+        </TokenRoute>
+      ),
+    },
+    {
+      path: "/stores",
+      element: (
+        <TokenRoute>
+          <Stores />
         </TokenRoute>
       ),
     },

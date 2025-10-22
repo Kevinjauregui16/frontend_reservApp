@@ -4,13 +4,18 @@ import {
   HiOutlineUserGroup,
 } from "react-icons/hi";
 import { FiLogOut } from "react-icons/fi";
+import { AiOutlineShop } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { useLogoutUserMutation } from "../../services/login";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export default function Sidebar({ user_role }) {
   const [logoutUser] = useLogoutUserMutation();
   const navigate = useNavigate();
+  const location = useLocation();
+  const pathname = location.pathname;
+
+  const isActive = (path) => pathname === path;
 
   const handleLogout = async () => {
     try {
@@ -36,10 +41,25 @@ export default function Sidebar({ user_role }) {
         <nav className="flex flex-col gap-6">
           <Link
             to="/dashboard"
-            className="flex items-center gap-3 text-gray-700 hover:text-blue-600 transition"
+            className={`flex items-center gap-3 transition ${
+              isActive("/dashboard")
+                ? " text-blue-600"
+                : "text-gray-700 hover:text-blue-600"
+            }`}
           >
             <HiOutlineHome className="w-6 h-6" />
             Dashboard
+          </Link>
+          <Link
+            to="/stores"
+            className={`flex items-center gap-3 transition ${
+              isActive("/stores")
+                ? " text-blue-600"
+                : "text-gray-700 hover:text-blue-600"
+            }`}
+          >
+            <AiOutlineShop className="w-6 h-6" />
+            Tiendas
           </Link>
           <Link
             to="/clientes"

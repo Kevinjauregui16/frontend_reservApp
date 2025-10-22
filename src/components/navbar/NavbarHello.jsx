@@ -2,7 +2,7 @@ import { HiOutlineUserGroup } from "react-icons/hi";
 
 export default function NavbarHello({ isLoading, user_name }) {
   return (
-    <div className="flex flex-col md:flex-row md:items-center md:justify-end gap-6 mb-10 border-b border-gray-200 py-6">
+    <div className="flex flex-col md:flex-row md:items-center md:justify-end gap-6 mb-4 border-b border-gray-200 py-6">
       <div className="flex items-center gap-4">
         <div className="bg-gradient-to-br from-blue-500 to-purple-500 text-white rounded-full p-2">
           <HiOutlineUserGroup className="w-10 h-10" />
