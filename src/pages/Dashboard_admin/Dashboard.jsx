@@ -11,7 +11,7 @@ import CreatePlanModal from "./Plans/CreatePlanModal";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { PieChart } from "@mui/x-charts";
-import Sidebar from "../../components/Sidebar/Sidebar";
+import Sidebar from "../../components/sidebar/Sidebar";
 
 import { superAdminActions } from "../../contentSections/dashboard/superAdminActions";
 import { adminActions } from "../../contentSections/dashboard/adminActions";
