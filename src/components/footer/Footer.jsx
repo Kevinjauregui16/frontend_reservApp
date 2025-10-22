@@ -5,8 +5,8 @@ export default function Footer({ data }) {
     user_role === "admin" || user_role === "superadmin";
 
   return (
-    <footer className="bg-white">
-      <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
+    <footer>
+      <div className="mx-auto w-full max-w-screen-xl py-6">
         <hr className="mb-6 border-gray-200 sm:mx-auto" />
         <div className="sm:flex sm:items-center sm:justify-between">
           <div>

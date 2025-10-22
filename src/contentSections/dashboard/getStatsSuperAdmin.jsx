@@ -14,19 +14,19 @@ export function getStatsSuperAdmin({
 }) {
   return [
     {
-      label: "Tiendas registradas",
+      label: "Tiendas",
       value: stores_count,
       icon: <HiOutlineBuildingStorefront className="w-8 h-8 text-blue-500" />,
       textClass: "text-blue-500",
     },
     {
-      label: "Clientes registrados",
+      label: "Clientes",
       value: clients_count,
       icon: <HiOutlineUserGroup className="w-8 h-8 text-yellow-500" />,
       textClass: "text-yellow-500",
     },
     {
-      label: "Usuarios registrados",
+      label: "Usuarios",
       value: users_count,
       icon: <HiOutlineUserGroup className="w-8 h-8 text-green-500" />,
       textClass: "text-green-500",
