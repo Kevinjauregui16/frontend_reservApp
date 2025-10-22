@@ -15,7 +15,7 @@ export default function AuthPage() {
     try {
       const response = await loginUser({ email, password }).unwrap();
       localStorage.setItem("token", response.token);
-      navigate("/dashboard-super-admin");
+      navigate("/dashboard");
     } catch (error) {
       toast.error(error?.data?.message || "Credenciales incorrectas");
     }

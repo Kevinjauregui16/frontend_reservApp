@@ -24,7 +24,7 @@ export const routes = {
   //rutas para super admin y admins
   tokenRoute: [
     {
-      path: "/dashboard-super-admin",
+      path: "/dashboard",
       element: (
         <TokenRoute>
           <Dashboard />

@@ -74,7 +74,7 @@ export default function DashboardAdmin() {
       <Sidebar user_role={user_role} />
       <div className="flex-1 ml-64">
         <div className="max-w-7xl mx-auto p-0 md:p-8">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-end gap-6 mb-10 border-b border-blue-100 pb-6">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-end gap-6 mb-10 border-b border-gray-200 pb-6">
             <div className="flex items-center gap-4">
               <div className="bg-gradient-to-br from-blue-500 to-purple-500 text-white rounded-full p-2">
                 <HiOutlineUserGroup className="w-10 h-10" />
